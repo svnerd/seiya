@@ -8,6 +8,19 @@ import os
 from argparse import ArgumentParser
 from deep_rl.util.save_restore import SaveRestoreService
 
+def test(net):
+    correct = 0
+    total = 0
+    with torch.no_grad():
+        for data in testloader:
+            images, labels = data
+            outputs = net(images)
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
+
+    print('Accuracy of the network on the 10000 test images: %d %%' % (
+        100 * correct / total))
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("-i", "--data-dir", help="output_dir", required=True)
@@ -69,19 +82,9 @@ if __name__ == '__main__':
                       (epoch + 1, i + 1, running_loss / 100))
                 running_loss = 0.0
         if epoch % 10 == 9:
+            test(net)
             sr_service.save()
 
     print('Finished Training')
 
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for data in testloader:
-            images, labels = data
-            outputs = net(images)
-            _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
 
-    print('Accuracy of the network on the 10000 test images: %d %%' % (
-        100 * correct / total))
