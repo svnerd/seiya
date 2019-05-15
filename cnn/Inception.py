@@ -1,6 +1,7 @@
 from torch import nn
 import torch.nn.functional as F
 import torch
+from deep_rl.util.device import DEVICE
 
 
 def inception_k5():
@@ -27,6 +28,7 @@ class SimpleInception(nn.Module):
         self.conv1_3, self.pool_3, self.conv2_3 = inception_k3()
         self.fc1 = nn.Linear(32*16*16, 16*16)
         self.fc2 = nn.Linear(16*16, 10)
+        self.to(DEVICE)
 
     def forward(self, images):
         o5 = forward(self.conv1_5, self.pool_5, self.conv2_5, images)
