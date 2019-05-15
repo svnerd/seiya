@@ -1,5 +1,6 @@
 from torch import nn
 import torch.nn.functional as F
+from deep_rl.util.device import DEVICE
 
 class LeNet5(nn.Module):
     def __init__(self):
@@ -11,8 +12,10 @@ class LeNet5(nn.Module):
         self.fc_1 = nn.Linear(5*5*16, 120)
         self.fc_2 = nn.Linear(120, 84)
         self.fc_3 = nn.Linear(84, 10)
+        self.to(DEVICE)
 
     def forward(self, x):
+
         x = F.relu(self.conv_1(x))
         x = self.maxpool_1(x)
         x = F.relu(self.conv_2(x))
