@@ -33,7 +33,7 @@ if __name__ == '__main__':
     net = LeNet5()
     #net = SimpleInception()
     cross_entropy = torch.nn.CrossEntropyLoss()
-    optimizer = optim.Adam(net.parameters(), lr=1e-4)
+    optimizer = optim.Adam(net.parameters(), lr=3e-4)
 
     '''
     transform = transforms.Compose([
