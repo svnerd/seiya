@@ -18,19 +18,23 @@ def test(net):
             _, predicted = torch.max(outputs.data, 1)
             total += labels.size(0)
             correct += (predicted == labels).sum().item()
-
     print('Accuracy of the network on the 10000 test images: %d %%' % (
         100 * correct / total))
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("-i", "--data-dir", help="output_dir", required=True)
     args = parser.parse_args()
     data_dir = args.data_dir
 
-    #net = LeNet5()
-    net = SimpleInception()
+    tag = "lenet5"
+    #tag = "inception"
+    net = LeNet5()
+    #net = SimpleInception()
     cross_entropy = torch.nn.CrossEntropyLoss()
     optimizer = optim.Adam(net.parameters(), lr=1e-4)
+
     '''
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
@@ -51,9 +55,9 @@ if __name__ == '__main__':
                                            download=False, transform=transform)
     testloader = torch.utils.data.DataLoader(testset, batch_size=4,
                                              shuffle=False, num_workers=2)
-    record_dir = os.path.join(data_dir, "inception")
+    record_dir = os.path.join(data_dir, tag)
     os.makedirs(record_dir, exist_ok=True)
-    network_dict = {"inception": net}
+    network_dict = {tag: net}
 
     sr_service = SaveRestoreService(record_dir, network_dict)
     sr_service.restore()

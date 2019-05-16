@@ -5,7 +5,7 @@ from deep_rl.util.device import DEVICE
 class LeNet5(nn.Module):
     def __init__(self):
         super(LeNet5, self).__init__()
-        self.conv_1 = nn.Conv2d(in_channels=1, out_channels=6, kernel_size=5, stride=1) # out: 28x28x6
+        self.conv_1 = nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, stride=1) # out: 28x28x6
         self.maxpool_1 = nn.MaxPool2d(kernel_size=2, stride=2) # out 14x14x16
         self.conv_2 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, stride=1) # out: 10x10x16
         self.maxpool_2 = nn.MaxPool2d(kernel_size=2, stride=2) # out 5x5x16
