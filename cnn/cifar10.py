@@ -3,6 +3,7 @@ import torchvision
 import torchvision.transforms as transforms
 from seiya.cnn.LeNet5 import LeNet5
 from seiya.cnn.Inception import SimpleInception
+from seiya.cnn.ResNet50 import ResNet50
 import torch.optim as optim
 import os
 from argparse import ArgumentParser
@@ -28,10 +29,12 @@ if __name__ == '__main__':
     args = parser.parse_args()
     data_dir = args.data_dir
 
-    tag = "lenet5"
+    #tag = "lenet5"
     #tag = "inception"
-    net = LeNet5()
+    tag = "resnet"
+    #net = LeNet5()
     #net = SimpleInception()
+    net = ResNet50(10)
     cross_entropy = torch.nn.CrossEntropyLoss()
     optimizer = optim.Adam(net.parameters(), lr=3e-4)
 
@@ -48,12 +51,12 @@ if __name__ == '__main__':
 
     trainset = torchvision.datasets.CIFAR10(root=data_dir, train=True,
                                             download=True, transform=transform)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=64,
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=256,
                                               shuffle=True, num_workers=2)
 
     testset = torchvision.datasets.CIFAR10(root=data_dir, train=False,
                                            download=False, transform=transform)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=4,
+    testloader = torch.utils.data.DataLoader(testset, batch_size=256,
                                              shuffle=False, num_workers=2)
     record_dir = os.path.join(data_dir, tag)
     os.makedirs(record_dir, exist_ok=True)
