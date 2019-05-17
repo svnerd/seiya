@@ -35,7 +35,8 @@ class BasicBlock(nn.Module):
 
 
 FIRST_CHANNEL = 64
-BLOCK_PER_LAYER_LIST = [2, 3, 6, 2]
+#BLOCK_PER_LAYER_LIST = [2, 3, 6, 2]
+BLOCK_PER_LAYER_LIST = [2, 2, 2, 2]
 
 
 class ResNet50(nn.Module):
