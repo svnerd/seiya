@@ -9,6 +9,8 @@ import os
 from argparse import ArgumentParser
 from deep_rl.util.save_restore import SaveRestoreService
 
+BATCH_SIZE=256
+
 def test(net):
     correct = 0
     total = 0
@@ -51,12 +53,12 @@ if __name__ == '__main__':
 
     trainset = torchvision.datasets.CIFAR10(root=data_dir, train=True,
                                             download=True, transform=transform)
-    trainloader = torch.utils.data.DataLoader(trainset, batch_size=256,
+    trainloader = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,
                                               shuffle=True, num_workers=2)
 
     testset = torchvision.datasets.CIFAR10(root=data_dir, train=False,
                                            download=False, transform=transform)
-    testloader = torch.utils.data.DataLoader(testset, batch_size=256,
+    testloader = torch.utils.data.DataLoader(testset, batch_size=BATCH_SIZE,
                                              shuffle=False, num_workers=2)
     record_dir = os.path.join(data_dir, tag)
     os.makedirs(record_dir, exist_ok=True)
