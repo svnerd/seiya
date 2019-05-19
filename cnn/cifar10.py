@@ -90,9 +90,8 @@ if __name__ == '__main__':
                 print('[%d, %5d] loss: %.3f' %
                       (epoch + 1, i + 1, running_loss / 10))
                 running_loss = 0.0
-        if epoch % 10 == 0:
-            test(net)
-            sr_service.save()
+        test(net)
+        sr_service.save()
 
     print('Finished Training')
 
